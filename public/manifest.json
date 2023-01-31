@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Dat Phase",
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "options_page": "./options/options.html",
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "resources": [
+        "/scripts/content-script.js",
+        "/shared/shared.js"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/content-script.js"
+      ],
+      "matches": [
+        "https://www.youtube.com/playlist?list=LL",
+        "https://www.youtube.com/feed/channels"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs"
+  ]
+}

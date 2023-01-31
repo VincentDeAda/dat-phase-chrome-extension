@@ -1,0 +1,19 @@
+@import url("../shared/shared.css");
+
+h1, h3 {
+  text-align: center;
+}
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  gap: 10px;
+  align-items: center;
+  width: 350px;
+  padding: 15px;
+  border: 1px solid var(--button-dark);
+  border-top: 30px solid var(--button-dark);
+  border-radius: 5px;
+}
