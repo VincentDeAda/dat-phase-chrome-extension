@@ -4,6 +4,10 @@ h1, h3 {
   text-align: center;
 }
 
+p {
+  text-align: center;
+  font-size: 1rem;
+}
 
 body {
   display: flex;
