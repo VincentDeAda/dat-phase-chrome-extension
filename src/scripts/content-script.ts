@@ -118,9 +118,11 @@ function checkKeywords(vid: Video) {
   if (!vid.title) {
     return false;
   }
+
   let lowerTitle = vid.title.toLowerCase();
   for (const word in settings.keywords) {
-    if (lowerTitle.includes(settings.keywords[word])) {
+    const regex = new RegExp(`\b${settings.keywords[word]}\b`);
+    if (regex.test(lowerTitle)) {
       return true;
     }
   }
@@ -161,7 +163,7 @@ async function startUp() {
       await incrementLikesRemoved();
     }
     await findNextVid();
-    await scripts.sleep(300);
+    await scripts.sleep(settings.delay);
   }
 
 

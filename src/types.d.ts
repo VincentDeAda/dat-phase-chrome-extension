@@ -3,6 +3,7 @@ interface Settings {
   channels: string[],
   whitelisted: string[],
   filter: FiltrationMethod,
+  delay: number
 }
 interface Video {
   title: string,
