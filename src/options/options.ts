@@ -20,9 +20,11 @@ const delayInput = document.getElementById('delay') as HTMLInputElement;
 const importFilterInput = document.getElementById('filterInput') as HTMLInputElement;
 
 const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
+const toggler = document.getElementById('toggleInsertBtn') as HTMLButtonElement;
 const exportBtn = document.getElementById('exportBtn') as HTMLButtonElement;
 const importBtn = document.getElementById('importBtn') as HTMLInputElement;
 
+let isSubWord = false;
 importFilterInput.addEventListener('keypress', (e) => onEnter(e, () => {
   importFilter((e.target as HTMLInputElement).value);
 }));
@@ -31,7 +33,11 @@ delayInput.addEventListener('change', () => {
   if (val <= 0)
     return;
   settings.delay = val;
-})
+});
+toggler.addEventListener('click', () => {
+  isSubWord = !isSubWord;
+  toggler.textContent = isSubWord ? "Mode: Sub-Word" : "Mode: Full-Word";
+});
 
 saveBtn.addEventListener('click', onSave);
 exportBtn.addEventListener('click', exportData)
@@ -103,12 +109,14 @@ function appendEntries(entryGroup: HTMLDivElement, entries: string[]) {
 }
 function assignEntry(entryGroup: HTMLDivElement, entryInput: HTMLInputElement, collection: string[]) {
   entryInput.addEventListener('keypress', (e) => onEnter(e, () => {
-    const isDuplicate = collection.includes(entryInput.value);
-    const isValid = entryInput.value.length > 2;
+    let trimmedVal = entryInput.value.trim();
+    let val = isSubWord ? trimmedVal : ` ${trimmedVal} `;
+    const isDuplicate = collection.includes(val);
+    const isValid = val.length >= 1;
     if (!isDuplicate && isValid) {
 
-      const li = createListItem(entryInput.value, collection);
-      collection.push(entryInput.value);
+      const li = createListItem(val, collection);
+      collection.push(val);
       entryGroup.append(li);
       alertOnClose();
 
@@ -130,8 +138,8 @@ function createListItem(entry: string, entries: string[]) {
     li.remove();
     alertOnClose();
   });
-  word.textContent = entries == settings.keywords ? entry.replaceAll(' ', '─') : entry;
 
+  word.textContent = entries == settings.keywords ? entry.replaceAll(' ', '─') : entry;
   li.append(deletionBtn, word);
   return li;
 
