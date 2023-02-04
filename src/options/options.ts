@@ -1,4 +1,4 @@
-import { appendUniqueArrayItems, FiltrationMethod, loadSettings, setSettings } from '../shared/shared.js'
+import { appendUniqueArrayItems, downloadFile, FiltrationMethod, loadSettings, setSettings } from '../shared/shared.js'
 const filterSelection = document.getElementById("filterType") as HTMLSelectElement;
 const importMethod = document.getElementById("importMethod") as HTMLSelectElement;
 
@@ -43,11 +43,7 @@ keywordsBtn.addEventListener('click', () => clearEntry(keywords, settings.keywor
 
 function exportData() {
   const file = new Blob([JSON.stringify(settings)], { type: "json/application" });
-  const anchor = document.createElement('a');
-  anchor.download = 'ImportedSettings.json';
-  anchor.href = URL.createObjectURL(file);
-  anchor.click();
-  anchor.remove();
+  downloadFile(file, 'ImportedSettings.json')
 }
 async function importData() {
   const file = importBtn.files![0];
@@ -108,7 +104,7 @@ function appendEntries(entryGroup: HTMLDivElement, entries: string[]) {
 function assignEntry(entryGroup: HTMLDivElement, entryInput: HTMLInputElement, collection: string[]) {
   entryInput.addEventListener('keypress', (e) => onEnter(e, () => {
     const isDuplicate = collection.includes(entryInput.value);
-    const isValid = entryInput.value.trim().length > 2;
+    const isValid = entryInput.value.length > 2;
     if (!isDuplicate && isValid) {
 
       const li = createListItem(entryInput.value, collection);
@@ -133,8 +129,9 @@ function createListItem(entry: string, entries: string[]) {
     entries.splice(entries.indexOf(entry), 1);
     li.remove();
     alertOnClose();
-  })
-  word.textContent = entry;
+  });
+  word.textContent = entries == settings.keywords ? entry.replaceAll(' ', '─') : entry;
+
   li.append(deletionBtn, word);
   return li;
 

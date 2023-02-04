@@ -15,6 +15,13 @@ export async function loadSettings() {
 
   }) as Settings;
 }
+export function downloadFile(file: Blob, fileName: string) {
+  const anchor = document.createElement('a');
+  anchor.download = fileName;
+  anchor.href = URL.createObjectURL(file);
+  anchor.click();
+  anchor.remove();
+}
 export async function setSettings(settings: Settings) {
   await chrome.storage.sync.set(settings);
 }

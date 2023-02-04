@@ -2,7 +2,7 @@
 let content: HTMLElement;
 let settings: Settings;
 let scripts: any;
-let likesRemoved: number = 0;
+let likesRemoved: Video[] = [];
 
 let hasLoadedAll: boolean = false;
 let attempts: number = 0;
@@ -10,7 +10,6 @@ let isCanceled = true;
 let currentVideo: HTMLElement;
 let hasLoaded = false;
 let filterFunction: ((vid: Video) => boolean);
-
 
 
 
@@ -42,11 +41,6 @@ chrome.runtime.onMessage.addListener(async (msg, sender, response) => {
       break;
   }
 });
-async function incrementLikesRemoved() {
-  likesRemoved++;
-  await chrome.runtime.sendMessage('LikeRemoved');
-}
-
 function setupFilter() {
   switch (settings.filter) {
     case "0":
@@ -121,8 +115,7 @@ function checkKeywords(vid: Video) {
 
   let lowerTitle = vid.title.toLowerCase();
   for (const word in settings.keywords) {
-    const regex = new RegExp(`\b${settings.keywords[word]}\b`);
-    if (regex.test(lowerTitle)) {
+    if (lowerTitle.includes(settings.keywords[word])) {
       return true;
     }
   }
@@ -137,7 +130,7 @@ async function removeLike(vid: Element) {
   const dropdownBtn = menu.querySelector('#button') as HTMLElement;
   dropdownBtn.click()
 
-  await scripts.sleep(500)
+  await scripts.sleep(600)
 
 
   const buttons = document.querySelectorAll('ytd-menu-service-item-renderer');
@@ -145,6 +138,10 @@ async function removeLike(vid: Element) {
   dislikeBtn.click();
 }
 
+function sendNewLikeRemoved(vid: Video) {
+  likesRemoved.push(vid);
+  chrome.runtime.sendMessage({ msg: "LikeRemoved", video: vid });
+}
 
 async function startUp() {
   if (isCanceled) return;
@@ -155,12 +152,12 @@ async function startUp() {
   }
   setupFilter();
   while (!isCanceled) {
-    let data = deconstructVideoData(currentVideo);
+    let video = deconstructVideoData(currentVideo);
 
-    let isBadVideo = filterFunction(data);
+    let isBadVideo = filterFunction(video);
     if (isBadVideo) {
+      sendNewLikeRemoved(video);
       await removeLike(currentVideo);
-      await incrementLikesRemoved();
     }
     await findNextVid();
     await scripts.sleep(settings.delay);
