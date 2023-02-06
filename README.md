@@ -1,6 +1,6 @@
 # **dat-phase**
 
-### dat-phase is chrome extension that automate the removal of liked video based on user provided filters such as keywords and channels with the ability to whitelist channels.
+### dat-phase is chrome extension that automate the removal of youtube liked video based on user provided filters such as keywords and channels with the ability to whitelist channels.
 
 ## **How to install?**
 
