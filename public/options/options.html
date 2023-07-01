@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400&display=swap" />
+
+  <link rel="stylesheet" href="options.css">
+  <title>Dat-Phase</title>
+</head>
+
+<body>
+  <h1>Options</h1>
+  <div class="filter-import">
+
+    <div class="data-input">
+      <label>Filter Type</label>
+      <select id="filterType">
+        <option value="0">Keywords Only</option>
+        <option value="1">Channels Only</option>
+        <option value="2">Keywords & Channels</option>
+        <option value="3" selected>Remove Everything isn't Whitelisted</option>
+        <option value="4">No Filter</option>
+      </select>
+    </div>
+
+    <div class="data-input">
+      <label>Import Filter</label>
+      <input id="filterInput" type="url" placeholder="Filter URL..." />
+      <label>Importing Method</label>
+      <div class="importDiv">
+        <select id="importMethod">
+          <option value="3" selected disabled hidden></option>
+          <option value="0">Append</option>
+          <option value="1">Replace</option>
+        </select>
+        <input type="file" id="importBtn">
+        <button id="exportBtn">Export</button>
+      </div>
+
+
+    </div>
+
+  </div>
+  <div class="filter-data">
+    <div class="container">
+      <div class="inputGroup">
+        <input id="channelsInput" type="text" placeholder="Add Channels.." />
+        <button id="channelsBtn">Clear</button>
+      </div>
+      <ul id="channels">
+
+    </div>
+
+    <div class="container">
+      <div class="inputGroup">
+        <input id="keywordInput" type="text" placeholder="Add Keywords.." />
+        <button id="keywordsBtn">Clear</button>
+      </div>
+      <ul id="keywords">
+
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="filter-data">
+    <div class="container">
+      <div class="inputGroup">
+        <input id="whitelistedInput" type="text" placeholder="Whitelist Channels.." />
+        <button id="whitelistedBtn">Clear</button>
+      </div>
+      <ul id="whitelisted">
+      </ul>
+    </div>
+  </div>
+  <button id="saveBtn">Save</button>
+
+
+</body>
+<script type="module" src="options.js"></script>
+
+</html>

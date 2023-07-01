@@ -1,0 +1,54 @@
+:root {
+  --main-bg: rgb(21, 25, 39);
+  --dark-bg: rgb(21, 12, 37);
+  --font-color: rgb(195, 195, 195);
+  --button-main: rgb(90, 44, 123);
+  --button-dark: rgb(64, 31, 87);
+  --button-focus: rgb(41, 19, 57);
+
+  --font-main: 'Orbitron'
+}
+
+html {
+  background-color: var(--main-bg);
+  color: var(--font-color);
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+
+}
+
+input, select {
+  background-color: var(--dark-bg);
+  border: 1px solid white;
+  border-radius: 2px;
+  color: var(--font-color);
+  font-size: 1.2rem;
+  font-family: var(--font-main);
+}
+
+button {
+  border: 1px solid black;
+  border-radius: 5px;
+  color: white;
+  background-color: var(--button-main);
+  font-family: inherit;
+  padding: 15px 30px;
+  align-self: center;
+
+}
+
+button:hover {
+  background-color: var(--button-dark)
+}
+
+button:active {
+  background-color: var(--button-focus);
+}
+
+button:disabled {
+  background-color: azure;
+}
