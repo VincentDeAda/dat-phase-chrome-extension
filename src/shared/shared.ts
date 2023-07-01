@@ -10,7 +10,9 @@ export async function loadSettings() {
     keywords: [],
     channels: [],
     whitelisted: [],
-    filter: 0
+    filter: 0,
+    delay: 500
+
   }) as Settings;
 }
 export async function setSettings(settings: Settings) {

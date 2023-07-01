@@ -52,3 +52,17 @@ button:active {
 button:disabled {
   background-color: azure;
 }
+
+.deletionBtn {
+  background-color: red;
+}
+
+
+
+.deletionBtn:hover {
+  background-color: Darkred;
+}
+
+.deletionBtn:active {
+  background-color: rgb(61, 0, 0);
+}

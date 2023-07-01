@@ -15,24 +15,33 @@
 
 <body>
   <h1>Options</h1>
-  <div class="filter-import">
+  <div class="import-groups">
 
-    <div class="data-input">
+    <div class="group">
       <label>Filter Type</label>
-      <select id="filterType">
-        <option value="0">Keywords Only</option>
-        <option value="1">Channels Only</option>
-        <option value="2">Keywords & Channels</option>
-        <option value="3" selected>Remove Everything isn't Whitelisted</option>
-        <option value="4">No Filter</option>
-      </select>
+      <div class="wrapper">
+        <select id="filterType">
+          <option value="0">Keywords Only</option>
+          <option value="1">Channels Only</option>
+          <option value="2">Keywords & Channels</option>
+          <option value="3" selected>Remove Everything isn't Whitelisted</option>
+          <option value="4">No Filter</option>
+        </select>
+        <input value="300" min="1" placeholder="Delay In-between (MS)" type="number" id="delay" />
+      </div>
     </div>
 
-    <div class="data-input">
+
+    <div class="group">
       <label>Import Filter</label>
       <input id="filterInput" type="url" placeholder="Filter URL..." />
+    </div>
+
+
+
+    <div class="group">
       <label>Importing Method</label>
-      <div class="importDiv">
+      <div class="wrapper">
         <select id="importMethod">
           <option value="0" select>Append</option>
           <option value="1">Replace</option>
@@ -40,36 +49,35 @@
         <input type="file" id="importBtn">
         <button id="exportBtn">Export</button>
       </div>
-
-
     </div>
 
   </div>
-  <div class="filter-data">
-    <div class="container">
-      <div class="inputGroup">
-        <input id="channelsInput" type="text" placeholder="Add Channels.." />
-        <button id="channelsBtn">Clear</button>
+  <button id="saveBtn">Save</button>
+
+  <div class="data-groups">
+    <div class="wrapper">
+
+      <div class="group">
+        <div class="wrapper">
+          <input id="channelsInput" type="text" placeholder="Add Channels.." />
+          <button id="channelsBtn">Clear</button>
+        </div>
+        <ul id="channels">
       </div>
-      <ul id="channels">
+
+      <div class="group">
+        <div class="wrapper">
+          <input id="keywordInput" type="text" placeholder="Add Keywords.." />
+          <button id="keywordsBtn">Clear</button>
+        </div>
+        <ul id="keywords">
+        </ul>
+      </div>
 
     </div>
 
-    <div class="container">
-      <div class="inputGroup">
-        <input id="keywordInput" type="text" placeholder="Add Keywords.." />
-        <button id="keywordsBtn">Clear</button>
-      </div>
-      <ul id="keywords">
-
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="filter-data">
-    <div class="container">
-      <div class="inputGroup">
+    <div class="group">
+      <div class="wrapper">
         <input id="whitelistedInput" type="text" placeholder="Whitelist Channels.." />
         <button id="whitelistedBtn">Clear</button>
       </div>
@@ -77,8 +85,6 @@
       </ul>
     </div>
   </div>
-  <button id="saveBtn">Save</button>
-
 
 </body>
 <script type="module" src="options.js"></script>

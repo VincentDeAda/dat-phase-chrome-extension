@@ -14,6 +14,8 @@ const whitelisted = document.getElementById('whitelisted') as HTMLDivElement;
 const whitelistedBtn = document.getElementById('whitelistedBtn') as HTMLDivElement;
 const whitelistedInput = document.getElementById('whitelistedInput') as HTMLInputElement;
 
+const delayInput = document.getElementById('delay') as HTMLInputElement;
+
 
 const importFilterInput = document.getElementById('filterInput') as HTMLInputElement;
 
@@ -24,7 +26,12 @@ const importBtn = document.getElementById('importBtn') as HTMLInputElement;
 importFilterInput.addEventListener('keypress', (e) => onEnter(e, () => {
   importFilter((e.target as HTMLInputElement).value);
 }));
-
+delayInput.addEventListener('change', () => {
+  const val = parseInt(delayInput.value);
+  if (val <= 0)
+    return;
+  settings.delay = val;
+})
 
 saveBtn.addEventListener('click', onSave);
 exportBtn.addEventListener('click', exportData)
@@ -77,9 +84,9 @@ assignEntry(channels, channelInput, settings.channels);
 assignEntry(keywords, keywordInput, settings.keywords);
 assignEntry(whitelisted, whitelistedInput, settings.whitelisted);
 filterSelection.value = settings.filter.toString() ?? 3;
+delayInput.value = settings.delay.toString();
 
 appendSettings();
-
 
 function appendSettings() {
   appendEntries(channels, settings.channels);

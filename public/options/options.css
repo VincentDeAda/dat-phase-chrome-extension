@@ -3,8 +3,8 @@
 body {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 20px;
+  align-items: center;
+  gap: 40px;
   padding: 30px;
 
 }
@@ -17,6 +17,14 @@ body h1 {
 select, input {
   font-size: 1.2rem;
   padding: 10px;
+  flex: 1;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+
 }
 
 input::file-selector-button {
@@ -33,58 +41,7 @@ input::file-selector-button:hover {
 
 }
 
-.filter-import {
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  padding: 0% 30%;
-  gap: 50px;
-  font-size: 1.2rem;
-}
-
-#importMethod {
-  flex: 1;
-}
-
-.importDiv {
-  gap: 5px;
-  display: flex;
-  flex-direction: row;
-}
-
-.data-input {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-
-
-.inputGroup {
-  display: flex;
-  flex-direction: row;
-  gap: 10px
-}
-
-.inputGroup input {
-
-  flex: 1;
-}
-
-.filter-data {
-  display: flex;
-  gap: 30px;
-  margin: 10px;
-
-}
-
-.filter-data .container {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 0;
-}
-
-.filter-data ul {
+ul {
   display: flex;
   flex-wrap: wrap;
   padding: 0;
@@ -97,7 +54,7 @@ input::file-selector-button:hover {
   align-content: flex-start;
 }
 
-.filter-data ul li {
+ul li {
   flex-grow: 1 1 1;
   border: 1px solid gray;
   align-items: flex-start;
@@ -105,27 +62,49 @@ input::file-selector-button:hover {
   display: flex;
 }
 
-.deletionBtn {
-  background-color: red;
-}
-
-
-
-.deletionBtn:hover {
-  background-color: Darkred;
-}
-
-.deletionBtn:active {
-  background-color: rgb(61, 0, 0);
-}
-
-.filter-data ul li .deletionBtn {
+ul li button {
   padding: 0;
   border-radius: 0;
   height: 100%;
   width: 30px;
 }
 
-.filter-data ul li h3 {
+ul li h3 {
   padding: 5px 10px;
+  font-size: 0.7rem
+}
+
+.import-groups {
+  display: flex;
+  flex-direction: column;
+  padding: auto;
+  gap: 30px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+}
+
+.wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.data-groups {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 30px;
+}
+
+.data-groups .wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.data-groups .wrapper .group {
+  flex: 1;
 }
