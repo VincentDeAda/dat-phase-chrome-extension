@@ -22,8 +22,11 @@ if (tab != undefined && tab.url == "https://www.youtube.com/playlist?list=LL") {
     }
   });
   function dataImport() {
-    const file = new Blob([JSON.stringify(vidsUnliked)]);
-    downloadFile(file, 'LikesRemoved.json');
+    if (vidsUnliked.length > 0) {
+      const file = new Blob([JSON.stringify(vidsUnliked)]);
+      downloadFile(file, 'LikesRemoved.json');
+    }
+
   }
   async function start() {
     await chrome.tabs.sendMessage(tab.id!, 'Start');
