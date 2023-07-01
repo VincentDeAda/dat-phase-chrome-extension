@@ -20,6 +20,9 @@ export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 export function appendUniqueArrayItems<T>(arr: T[], newArr: T[]) {
+  if (!newArr) {
+    return;
+  }
   newArr.forEach(x => appendUniqueItem(arr, x));
 }
 export function appendUniqueItem<T>(arr: T[], item: T) {

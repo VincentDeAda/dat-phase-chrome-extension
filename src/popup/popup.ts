@@ -55,7 +55,6 @@ if (tab != undefined && tab.url == "https://www.youtube.com/playlist?list=LL") {
 }
 else if (tab != undefined && tab.url == "https://www.youtube.com/feed/channels") {
   header.textContent = 'Channels Whitelisted'
-  para.remove();
   btn.innerText = 'Import Subscriptions';
   btn.addEventListener('click', async () => {
     let subs = await chrome.tabs.sendMessage(tab.id!, 'GetSubs') as string[];
@@ -64,12 +63,26 @@ else if (tab != undefined && tab.url == "https://www.youtube.com/feed/channels")
     await setSettings(settings);
     count.textContent = subs.length.toString();;
   });
+  para.textContent = "Please scroll to the bottom of the page and load every channel before starting to import."
 }
 else {
 
   btn.remove();
   count.remove();
   header.textContent = "There's nothing to do on this page.";
-  para.remove();
+  let whitelisted = document.createElement('a');
+  whitelisted.text = 'this page ';
+  whitelisted.href = 'https://www.youtube.com/feed/channels';
+  whitelisted.target = "_blank"
+  para.innerHTML = 'Please head to ';
+  para.appendChild(whitelisted);
+  para.innerHTML += 'to whitelist subscribed channels '
+  let liked = document.createElement('a');
+  liked.text = 'or this page ';
+  liked.href = 'https://www.youtube.com/playlist?list=LL';
+  liked.target = "_blank"
+
+  para.appendChild(liked);
+  para.innerHTML += "to start removing likes."
 
 }

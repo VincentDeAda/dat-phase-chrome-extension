@@ -44,13 +44,11 @@ function exportData() {
 }
 async function importData() {
   const file = importBtn.files![0];
-  const fileText = await file.text();
   let jsonData: Settings;
   try {
+    const fileText = await file.text();
     jsonData = JSON.parse(fileText)
-    if (!isSettings(jsonData)) {
-      throw null;
-    }
+
   } catch (error) {
     alert('Invalid File');
     return;
@@ -69,6 +67,7 @@ async function importData() {
   }
 
   appendSettings();
+  importBtn.value = '';
 
 }
 
@@ -149,11 +148,14 @@ async function importFilter(url: string) {
     if (method == "1") {
       clearEntry(channels, settings.channels);
       clearEntry(keywords, settings.keywords);
+      clearEntry(whitelisted, settings.whitelisted);
     }
     settings.channels.push(...parsedResponse.channels);
     settings.keywords.push(...parsedResponse.keywords);
+    settings.whitelisted.push(...parsedResponse.whitelisted);
     appendEntries(channels, parsedResponse.channels);
     appendEntries(keywords, parsedResponse.keywords);
+    appendEntries(whitelisted, parsedResponse.whitelisted);
   } catch (error) {
     console.log(error);
 

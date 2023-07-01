@@ -25,6 +25,7 @@ input::file-selector-button {
   color: white;
   padding: 15px 10px;
   border-radius: 5px;
+  font-family: inherit;
 }
 
 input::file-selector-button:hover {
@@ -56,6 +57,7 @@ input::file-selector-button:hover {
   flex-direction: column;
   gap: 10px;
 }
+
 
 
 .inputGroup {
