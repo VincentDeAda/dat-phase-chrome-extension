@@ -1,25 +1,32 @@
-import { appendUniqueArrayItems, FiltrationMethod, loadSettings, setSettings } from "../shared/shared.js";
+import { appendUniqueArrayItems, downloadFile, FiltrationMethod, loadSettings, setSettings } from "../shared/shared.js";
 let btn = document.getElementById('btn') as HTMLButtonElement;
 let header = document.querySelector('h2') as HTMLElement;
-let para = document.querySelector('p') as HTMLElement;
+let note = document.getElementById('note') as HTMLElement;
+let importBtn = document.getElementById('import') as HTMLElement;
+let likesRemoved = document.getElementById('likesRemoved') as HTMLElement;
+let likesRemovedList = document.getElementById('likesRemovedList') as HTMLElement;
 let count = document.getElementById('count') as HTMLElement;
-let lRemoved: number = 0;
+let vidsUnliked: Video[] = []
 const [tab] = await chrome.tabs.query({ lastFocusedWindow: true, active: true });
 
 if (tab != undefined && tab.url == "https://www.youtube.com/playlist?list=LL") {
-
+  importBtn.addEventListener('click', dataImport);
 
   btn.addEventListener('click', start);
 
   chrome.runtime.onMessage.addListener((msg, sender, request) => {
-    if (msg == 'LikeRemoved') {
-      lRemoved++;
-      count.textContent = lRemoved.toString();;
+    if (msg.msg == 'LikeRemoved') {
+      appendLikeRemoved(msg.video);
+      count.textContent = vidsUnliked.length.toString();
     }
     if (msg == 'NoMoreVids') {
       stop();
     }
   });
+  function dataImport() {
+    const file = new Blob([JSON.stringify(vidsUnliked)]);
+    downloadFile(file, 'LikesRemoved.json');
+  }
   async function start() {
     await chrome.tabs.sendMessage(tab.id!, 'Start');
     btn.textContent = 'Stop'
@@ -35,11 +42,21 @@ if (tab != undefined && tab.url == "https://www.youtube.com/playlist?list=LL") {
 
   }
 
-
+  function appendLikeRemoved(vid: Video) {
+    const li = document.createElement('li');
+    const channelName = document.createElement('label');
+    const videoTitle = document.createElement('p');
+    channelName.textContent = vid.channel;
+    videoTitle.textContent = vid.title;
+    li.append(videoTitle, channelName);
+    likesRemovedList.append(li);
+    vidsUnliked.push(vid);
+  }
 
   const currentState = await chrome.tabs.sendMessage(tab.id!, '');
 
-  count.textContent = currentState.likesRemoved;
+  count.textContent = currentState.likesRemoved.length;
+  currentState.likesRemoved.forEach(appendLikeRemoved);
 
   if (currentState.isCanceled) {
     btn.textContent = 'Start'
@@ -54,6 +71,7 @@ if (tab != undefined && tab.url == "https://www.youtube.com/playlist?list=LL") {
 
 }
 else if (tab != undefined && tab.url == "https://www.youtube.com/feed/channels") {
+  likesRemoved.remove();
   header.textContent = 'Channels Whitelisted'
   btn.innerText = 'Import Subscriptions';
   btn.addEventListener('click', async () => {
@@ -63,10 +81,10 @@ else if (tab != undefined && tab.url == "https://www.youtube.com/feed/channels")
     await setSettings(settings);
     count.textContent = subs.length.toString();;
   });
-  para.textContent = "Please scroll to the bottom of the page and load every channel before starting to import."
+  note.textContent = "Please scroll to the bottom of the page and load every channel before starting to import."
 }
 else {
-
+  likesRemoved.remove();
   btn.remove();
   count.remove();
   header.textContent = "There's nothing to do on this page.";
@@ -74,15 +92,15 @@ else {
   whitelisted.text = 'this page ';
   whitelisted.href = 'https://www.youtube.com/feed/channels';
   whitelisted.target = "_blank"
-  para.innerHTML = 'Please head to ';
-  para.appendChild(whitelisted);
-  para.innerHTML += 'to whitelist subscribed channels '
+  note.innerHTML = 'Please head to ';
+  note.appendChild(whitelisted);
+  note.innerHTML += 'to whitelist subscribed channels '
   let liked = document.createElement('a');
   liked.text = 'or this page ';
   liked.href = 'https://www.youtube.com/playlist?list=LL';
   liked.target = "_blank"
 
-  para.appendChild(liked);
-  para.innerHTML += "to start removing likes."
+  note.appendChild(liked);
+  note.innerHTML += "to start removing likes."
 
 }

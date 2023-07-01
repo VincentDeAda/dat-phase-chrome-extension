@@ -1,10 +1,11 @@
 @import url("../shared/shared.css");
 
+
 h1, h3 {
   text-align: center;
 }
 
-p {
+#note {
   text-align: center;
   font-size: 1rem;
 }
@@ -13,11 +14,50 @@ body {
   display: flex;
   flex-direction: column;
   margin: auto;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
   width: 350px;
   padding: 15px;
   border: 1px solid var(--button-dark);
   border-top: 30px solid var(--button-dark);
   border-radius: 5px;
+}
+
+#likesRemoved {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+#likesRemovedList {
+
+  background-color: var(--dark-bg);
+  max-height: 300px;
+  padding: 0;
+}
+
+ul {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+li {
+  margin: 5px;
+  background-color: var(--main-bg);
+  border: 1px var(--button-dark) solid;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+li label {
+  font-size: 0.9rem;
+}
+
+li p {
+  font-size: 0.7rem;
 }
