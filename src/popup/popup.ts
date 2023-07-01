@@ -8,10 +8,8 @@ let likesRemovedList = document.getElementById('likesRemovedList') as HTMLElemen
 let count = document.getElementById('count') as HTMLElement;
 let vidsUnliked: Video[] = []
 const [tab] = await chrome.tabs.query({ lastFocusedWindow: true, active: true });
-
 if (tab != undefined && tab.url == "https://www.youtube.com/playlist?list=LL") {
   importBtn.addEventListener('click', dataImport);
-
   btn.addEventListener('click', start);
 
   chrome.runtime.onMessage.addListener((msg, sender, request) => {
