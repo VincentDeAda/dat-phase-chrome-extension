@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "Dat Phase",
   "version": "1.0.0",
+  "description": "Simple Automation tool made by @VincentDeAda to remove unwanted and embarrassing childhood mistakes.",
   "action": {
     "default_popup": "popup/popup.html"
   },
