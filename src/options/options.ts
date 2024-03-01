@@ -110,7 +110,11 @@ function appendEntries(entryGroup: HTMLDivElement, entries: string[]) {
 function assignEntry(entryGroup: HTMLDivElement, entryInput: HTMLInputElement, collection: string[]) {
   entryInput.addEventListener('keypress', (e) => onEnter(e, () => {
     let trimmedVal = entryInput.value.trim();
-    let val = isSubWord ? trimmedVal : ` ${trimmedVal} `;
+    let val = "";
+    if (entryGroup.id == "keywords" && isSubWord)
+      val = ` ${trimmedVal} `;
+    else
+      val = trimmedVal
     const isDuplicate = collection.includes(val);
     const isValid = val.length >= 1;
     if (!isDuplicate && isValid) {
